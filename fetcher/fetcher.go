@@ -19,7 +19,7 @@ func Fetcher(url string) ([]byte, error) {
 		return nil, err
 	}
 	if resp.StatusCode != http.StatusOK {
-		return nil, fmt.Errorf("wrong request response code")
+		return nil, fmt.Errorf("wrong request response code:%d",resp.StatusCode)
 	}
 	e := determineEncoding(resp.Body)
 	utf8reader := transform.NewReader(resp.Body, e.NewDecoder())

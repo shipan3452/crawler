@@ -26,4 +26,5 @@ func NilParser([]byte) ParseResult {
 type Scheduler interface {
 	Submit(Request)
 	SetChannel(c chan Request)
+	WorkerIsReady(c chan Request)
 }

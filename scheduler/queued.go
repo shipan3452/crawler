@@ -12,7 +12,9 @@ func (scheduler *QueuedScheduler) SetChannel(c chan engine.Request) {
 }
 
 func (scheduler *QueuedScheduler) Submit(r engine.Request) {
-	scheduler.RequestChan <- r
+	go func() {
+		scheduler.RequestChan <- r
+	}()
 }
 
 func (scheduler *QueuedScheduler) WorkerIsReady(c chan engine.Request) {

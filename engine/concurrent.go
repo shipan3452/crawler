@@ -1,6 +1,8 @@
 package engine
 
-import "fmt"
+import (
+	"fmt"
+)
 
 type ConcurrentEngine struct {
 	Scheduler   Scheduler
@@ -28,9 +30,7 @@ func (engine *ConcurrentEngine) Run(seeds ...Request) {
 			fmt.Printf("%s\n", item)
 		}
 		for _, r := range result.Requests {
-			go func() {
-				engine.Scheduler.Submit(r)
-			}()
+			engine.Scheduler.Submit(r)
 		}
 
 	}

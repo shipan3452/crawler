@@ -9,9 +9,9 @@ type QueueEngine struct {
 
 func (engine *QueueEngine) Run(seeds ...Request) {
 	out := make(chan ParseResult)
-	
+
 	for i := 0; i <= engine.WorkerCount; i++ {
-		CreateAWorker( out,engine.Scheduler)
+		CreateAWorker(out, engine.Scheduler)
 	}
 
 	for _, r := range seeds {
@@ -24,16 +24,14 @@ func (engine *QueueEngine) Run(seeds ...Request) {
 			fmt.Printf("%s\n", item)
 		}
 		for _, r := range result.Requests {
-			go func() {
-				engine.Scheduler.Submit(r)
-			}()
+			engine.Scheduler.Submit(r)
 		}
 
 	}
 }
 
-func CreateAWorker( out chan ParseResult,scheduler Scheduler) {
-	c:=make(chan Request);
+func CreateAWorker(out chan ParseResult, scheduler Scheduler) {
+	c := make(chan Request);
 	go func() {
 		for ; ; {
 			scheduler.WorkerIsReady(c)
